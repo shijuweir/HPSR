@@ -1,0 +1,16 @@
+HP Sure Recover Provisioning Process Flow 
+
+1. System Information Gathering Collect computer name, manufacturer, BIOS version, Windows edition.
+ 2. HP OEM Entitlement Validation Access HP BIOS namespace → Parse feature bytes → Validate Windows 11 entitlement. 
+3. Disk Space Validation Check C:\ free space ≥ 50GB → Exit if insufficient. 
+4. Partition Management Delete SR_AED & SR_IMAGE (if exist) → Expand C:\ Remove Recovery partition → Expand C:\ Shrink C:\ → Create unallocated space (33GB) Create partitions: Recovery (750MB NTFS) SR_AED (1GB FAT32, retry if fail) SR_IMAGE (31GB NTFS, retry if fail) 
+5. Partition Verification Confirm SR_AED & SR_IMAGE → Update registry → Exit on failure. 
+6. File Deployment Copy sync script to C:\ProgramData\HPSR → Create hidden folder if needed. 
+7. MSI Installation Install HP Sure Recover MSI → Log results → Continue on failure. 
+8. Scheduled Task Registration Determine schedule by hostname → Delete old task → Create monthly sync task. 
+9. Registry Settings Set Sync_Enabled=True in HKLM\SOFTWARE\HPSR\HP Cloud Recovery. 
+10. Run Sync Task Trigger scheduled task immediately. 
+11. Final Registry Marking Write success status & date to HKLM\SOFTWARE\HPSR. 
+12. Completion Log summary → Exit with code 0. 
+
+Can you create a flow chart of the steps. Make it looks like a professional presenatation and it should fit in one slide.
